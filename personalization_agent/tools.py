@@ -19,11 +19,11 @@ from typing import List, Dict, Any, Optional
 
 
 class TriggerAnalyzer:
-    def __init__(self, trigger_file: str = "triggerwords_personalization.xlsx"):
+    def __init__(self, openai_client, trigger_file: str = "triggerwords_personalization.xlsx"):
         self.df = pd.read_excel(trigger_file)
 
         # Initialize OpenAI client with API key from config
-        self.openai = OpenAI(api_key=config.OPENAI_API_KEY)
+        self.openai = openai_client
 
         # Prepare few-shot examples from Excel to include in prompt
         self.examples = []
@@ -321,10 +321,10 @@ class TriggerAnalyzer:
     
 
 class VulnerabilityAssessor:
-    def __init__(self):
+    def __init__(self,openai_client):
         self.thresholds = TRUST_THRESHOLDS
         self.info_categories = INFO_CATEGORIES
-        self.openai = OpenAI(api_key=config.OPENAI_API_KEY)
+        self.openai = openai_client
         self.parser = JsonOutputParser(
             schema={
                 "requested_info": "List of requested info categories. Only include if the user is explicitly requesting them. Possible values: name, phone, email, location, job, address, password, ssn, account, credit_card. Return empty list if none are requested."
@@ -456,9 +456,9 @@ class VulnerabilityAssessor:
     
 
 class TrustCalculator:
-    def __init__(self):
+    def __init__(self,openai_client):
         self.config = VICTIM_CONFIG
-        self.openai = OpenAI(api_key=config.OPENAI_API_KEY)
+        self.openai = openai_client
         self.parser = JsonOutputParser()
         self.thresholds = TRUST_THRESHOLDS
         self.info_categories = INFO_CATEGORIES
