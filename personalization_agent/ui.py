@@ -143,7 +143,7 @@ if 'messages' not in st.session_state:
         st.session_state.messages = []
 
 if 'agent' not in st.session_state:
-        st.session_state.agent = VoiceFishingAgent()
+        st.session_state.agent = VoiceFishingAgent(client)
 
 
 if "threshold" not in st.session_state:
