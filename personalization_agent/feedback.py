@@ -6,8 +6,8 @@ import textwrap
 import plotly.graph_objects as go
 
 # Initialize LLM client
-if "llm" not in st.session_state:
-    st.session_state.llm = OpenAI()
+'''if "llm" not in st.session_state:
+    st.session_state.llm = OpenAI() '''
 
 # Trust Thresholds & Categories (same refactor as feedback (2).py)
 TRUST_THRESHOLDS = {
