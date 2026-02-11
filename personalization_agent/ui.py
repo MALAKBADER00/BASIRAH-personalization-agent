@@ -14,7 +14,7 @@ from feedback import FeedbackAgent
 import random
 import textwrap
 import plotly.graph_objects as go
-
+from pathlib import Path
 
 CATEGORIES = [
     "Name", "Username / Handle", "Location (City)",
@@ -124,8 +124,9 @@ def text_to_speech(text):
         st.error(f"Error generating speech: {str(e)}")
         return None
 
-
-df = pd.read_csv("data.csv")
+base_path = Path(__file__).parent
+data_path = base_path / "data.csv"
+df = pd.read_csv(data_path)
 all_keywords = []
 for phrase in df["Category"]:   # change "Category" if your column name differs
     if pd.notna(phrase):
