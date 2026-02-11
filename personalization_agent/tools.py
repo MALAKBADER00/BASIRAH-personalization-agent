@@ -13,17 +13,20 @@ import random
 import config
 from langchain_core.prompts import ChatPromptTemplate
 from config import info_data
-
+from pathlib import Path
 from typing import List, Dict, Any, Optional
 
 
 
 class TriggerAnalyzer:
     def __init__(self, openai_client, trigger_file: str = "triggerwords_personalization.xlsx"):
-        self.df = pd.read_excel(trigger_file)
+        base_path = Path(__file__).parent
+        trigger_path = base_path / trigger_file
+        self.df = pd.read_excel(trigger_path)
 
         # Initialize OpenAI client with API key from config
         self.openai = openai_client
+    
 
         # Prepare few-shot examples from Excel to include in prompt
         self.examples = []
