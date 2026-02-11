@@ -22,15 +22,15 @@ class AgentState(TypedDict):
 
 
 class VoiceFishingAgent:
-    def __init__(self):
+    def __init__(self, openai_client):
         #self.groq_client = Groq(api_key= GROQ_API_KEY)
-        self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
+        self.openai_client = openai_client
         
         # Initialize tools
-        self.trigger_analyzer = TriggerAnalyzer()
+        self.trigger_analyzer = TriggerAnalyzer(openai_client)
         #self.trust_calculator = TrustCalculator()
-        self.trust_calculator = TrustCalculator()
-        self.vulnerability_assessor = VulnerabilityAssessor()
+        self.trust_calculator = TrustCalculator(openai_client)
+        self.vulnerability_assessor = VulnerabilityAssessor(openai_client)
         
         # Build workflow
         self.workflow = self._build_workflow()
